@@ -12,17 +12,11 @@ namespace Algorithm
         {
             YoungerPerson = youngerPerson;
             OlderPerson = olderPerson;
+            AgeDifference = OlderPerson.BirthDate - YoungerPerson.BirthDate;
         }
 
         public Person YoungerPerson { get; private set; }
         public Person OlderPerson { get; private set; }
-
-        public TimeSpan AgeDifference
-        {
-            get
-            {
-                return OlderPerson.BirthDate - YoungerPerson.BirthDate;
-            }
-        }
+        public TimeSpan AgeDifference { get; set; }
     }
 }
