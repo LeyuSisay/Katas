@@ -4,8 +4,25 @@ namespace Algorithm
 {
     public class PairAgeDifference
     {
-        public Person YongerPerson { get; set; }
-        public Person OlderPerson { get; set; }
-        public TimeSpan AgeDifference { get; set; }
+        public PairAgeDifference()
+        {
+
+        }
+        public PairAgeDifference(Person youngerPerson, Person olderPerson)
+        {
+            YoungerPerson = youngerPerson;
+            OlderPerson = olderPerson;
+        }
+
+        public Person YoungerPerson { get; private set; }
+        public Person OlderPerson { get; private set; }
+
+        public TimeSpan AgeDifference
+        {
+            get
+            {
+                return OlderPerson.BirthDate - YoungerPerson.BirthDate;
+            }
+        }
     }
 }
