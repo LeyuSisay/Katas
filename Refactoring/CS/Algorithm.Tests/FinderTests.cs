@@ -12,10 +12,10 @@ namespace Algorithm.Test
             var list = new List<Person>();
             var finder = new Finder(list);
 
-            var result = finder.Find(FT.One);
+            var result = finder.Find(AgeDifferenceType.Closer);
 
-            Assert.Null(result.P1);
-            Assert.Null(result.P2);
+            Assert.Null(result.YongerPerson);
+            Assert.Null(result.OlderPerson);
         }
 
         [Fact]
@@ -24,10 +24,10 @@ namespace Algorithm.Test
             var list = new List<Person>() { sue };
             var finder = new Finder(list);
 
-            var result = finder.Find(FT.One);
+            var result = finder.Find(AgeDifferenceType.Closer);
 
-            Assert.Null(result.P1);
-            Assert.Null(result.P2);
+            Assert.Null(result.YongerPerson);
+            Assert.Null(result.OlderPerson);
         }
 
         [Fact]
@@ -36,10 +36,10 @@ namespace Algorithm.Test
             var list = new List<Person>() { sue, greg };
             var finder = new Finder(list);
 
-            var result = finder.Find(FT.One);
+            var result = finder.Find(AgeDifferenceType.Closer);
 
-            Assert.Same(sue, result.P1);
-            Assert.Same(greg, result.P2);
+            Assert.Same(sue, result.YongerPerson);
+            Assert.Same(greg, result.OlderPerson);
         }
 
         [Fact]
@@ -48,10 +48,10 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike };
             var finder = new Finder(list);
 
-            var result = finder.Find(FT.Two);
+            var result = finder.Find(AgeDifferenceType.Further);
 
-            Assert.Same(greg, result.P1);
-            Assert.Same(mike, result.P2);
+            Assert.Same(greg, result.YongerPerson);
+            Assert.Same(mike, result.OlderPerson);
         }
 
         [Fact]
@@ -60,10 +60,10 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike, sarah, sue };
             var finder = new Finder(list);
 
-            var result = finder.Find(FT.Two);
+            var result = finder.Find(AgeDifferenceType.Further);
 
-            Assert.Same(sue, result.P1);
-            Assert.Same(sarah, result.P2);
+            Assert.Same(sue, result.YongerPerson);
+            Assert.Same(sarah, result.OlderPerson);
         }
 
         [Fact]
@@ -72,10 +72,10 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike, sarah, sue };
             var finder = new Finder(list);
 
-            var result = finder.Find(FT.One);
+            var result = finder.Find(AgeDifferenceType.Closer);
 
-            Assert.Same(sue, result.P1);
-            Assert.Same(greg, result.P2);
+            Assert.Same(sue, result.YongerPerson);
+            Assert.Same(greg, result.OlderPerson);
         }
 
         Person sue = new Person() {Name = "Sue", BirthDate = new DateTime(1950, 1, 1)};

@@ -1,67 +1,59 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm
 {
     public class Finder
     {
-        private readonly List<Person> _p;
+        private readonly List<Person> _persons;
 
-        public Finder(List<Person> p)
+        public Finder(List<Person> persons)
         {
-            _p = p;
+            _persons = persons;
         }
 
-        public F Find(FT ft)
+        public PairAgeDifference Find(AgeDifferenceType ageDifferenceType)
         {
-            var tr = new List<F>();
+            var pairAgeDifferences = ComputePairAgeDifferences();
 
-            for(var i = 0; i < _p.Count - 1; i++)
+            if (!pairAgeDifferences.Any())
             {
-                for(var j = i + 1; j < _p.Count; j++)
+                return new PairAgeDifference();
+            }
+
+            return pairAgeDifferences.Aggregate(ageDifferenceType.Strategy);
+        }
+
+        private List<PairAgeDifference> ComputePairAgeDifferences()
+        {
+            var pairAgeDifferences = new List<PairAgeDifference>();
+
+            for (var first = 0; first < _persons.Count - 1; first++)
+            {
+                for (var second = first + 1; second < _persons.Count; second++)
                 {
-                    var r = new F();
-                    if(_p[i].BirthDate < _p[j].BirthDate)
+                    var pairAgeDifference = new PairAgeDifference();
+
+                    var firstPersonYoungerThanSecond = _persons[first].BirthDate < _persons[second].BirthDate;
+
+                    if (firstPersonYoungerThanSecond)
                     {
-                        r.P1 = _p[i];
-                        r.P2 = _p[j];
+                        pairAgeDifference.YongerPerson = _persons[first];
+                        pairAgeDifference.OlderPerson = _persons[second];
                     }
                     else
                     {
-                        r.P1 = _p[j];
-                        r.P2 = _p[i];
+                        pairAgeDifference.YongerPerson = _persons[second];
+                        pairAgeDifference.OlderPerson = _persons[first];
                     }
-                    r.D = r.P2.BirthDate - r.P1.BirthDate;
-                    tr.Add(r);
+
+                    pairAgeDifference.AgeDifference = pairAgeDifference.OlderPerson.BirthDate -
+                                                      pairAgeDifference.YongerPerson.BirthDate;
+
+                    pairAgeDifferences.Add(pairAgeDifference);
                 }
             }
-
-            if(tr.Count < 1)
-            {
-                return new F();
-            }
-
-            F answer = tr[0];
-            foreach(var result in tr)
-            {
-                switch(ft)
-                {
-                    case FT.One:
-                        if(result.D < answer.D)
-                        {
-                            answer = result;
-                        }
-                        break;
-
-                    case FT.Two:
-                        if(result.D > answer.D)
-                        {
-                            answer = result;
-                        }
-                        break;
-                }
-            }
-
-            return answer;
+            return pairAgeDifferences;
         }
     }
 }
